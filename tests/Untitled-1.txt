@@ -1,0 +1,6 @@
+| Structure       | Implemented           |
+| ----------------|-----------------------|
+| Data validation | N/A                   |
+| Naming          | (All data structures) |
+| Comments        | (Everywhere)          |
+| Try/Catch       | N/A                   |

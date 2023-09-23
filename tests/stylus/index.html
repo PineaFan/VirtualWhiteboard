@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Stylus</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body style="height: 100vh; width: 100vw; position: absolute;" >
+        <style>
+            * {
+                -webkit-tap-highlight-color:transparent;
+                -webkit-touch-callout:none;
+                -webkit-user-select:none;
+                -moz-user-select:none;
+                -ms-user-select:none;
+                user-select:none;
+                overflow: hidden;
+            }
+        </style>
+        <div
+            style="height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; top: 0; left: 0;"
+        >
+            <img src="./active.svg" style="height: 50%; width: 50%; display: none;" id="active" />
+            <img src="./inactive.svg" style="height: 50%; width: 50%;" id="inactve"/>
+        </div>
+        <div
+            style="height: 100vh; width: 100vw; top: 0; left: 0; position: absolute; display: flex; align-items: center; justify-content: center; color: rgba(0, 0, 0, 0.001);"
+            ontouchstart="document.getElementById('active').style.display = 'block'; document.getElementById('inactve').style.display = 'none';"
+            ontouchend="document.getElementById('active').style.display = 'none'; document.getElementById('inactve').style.display = 'block';"
+            onmousedown="document.getElementById('active').style.display = 'block'; document.getElementById('inactve').style.display = 'none';"
+            onmouseup="document.getElementById('active').style.display = 'none'; document.getElementById('inactve').style.display = 'block';"
+        />
+    </body>
+</html>
