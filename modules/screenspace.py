@@ -13,9 +13,12 @@ vs = VideoStream(src=0).start()
 screenspace_corners = [(0, 0), (0, 0), (0, 0), (0, 0)]
 default_full_codes = [screenspace_corners for _ in range(4)]
 
-aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_1000)
-aruco_params = cv2.aruco.DetectorParameters_create()
+# College maybe?
+# aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_1000)
+# aruco_params = cv2.aruco.DetectorParameters_create()
 
+aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_5X5_1000)
+aruco_params = cv2.aruco.DetectorParameters()
 
 def get_current_frame():
     """Gets the current frame from the webcam"""

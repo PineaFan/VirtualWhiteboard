@@ -15,9 +15,9 @@ from modules import body
 import os
 import threading
 
-import pygame
+# import pygame
 
-pygame.init()
+pygame_initialised = False
 
 
 colours = {
@@ -46,7 +46,8 @@ class Driver:
         flip_horizontal: bool = False,
         flip_vertical: bool = False,
         width=300,
-        height=150
+        height=150,
+        use_pygame=True
     ):
         self.modules = modules
         self.flip_horizontal = flip_horizontal
@@ -93,6 +94,7 @@ class Driver:
 
         self.output_size = (500, 0)
         self.frame_number = 0
+        self.use_pygame = use_pygame
 
     def use_monitor_display(self):
         """Uses the user's screen as the output, rather than the physical codes"""
@@ -120,8 +122,9 @@ class Driver:
             self.output_size = (width, int(width / video_ratio))
             # Set the dimensions of the UI window
             self.first_camera_frame = False
-            self.screen = pygame.display.set_mode((self.output_size[0] + 40 + 32 + 20, self.output_size[1] + 140))
-            pygame.display.set_caption("Screenspace")
+            if self.use_pygame:
+                self.screen = pygame.display.set_mode((self.output_size[0] + 40 + 32 + 20, self.output_size[1] + 140))
+                pygame.display.set_caption("Screenspace")
         dimensions = manipulation.create_image_with_dimensions(width, height)
         # Get the corners of the screen
         self.screenspace_corners, output_frame, self.previous_full_codes, self.videospace_stylus_coords, \
@@ -232,6 +235,16 @@ class Driver:
 
     def _render(self, frame, overlay=None) -> None:
         """Outputs the frame in the desired format"""
+        if not self.use_pygame:
+            # Overlay the frame onto the camera feed by using the warp matrix
+            frame = manipulation.overlay_image(self.camera_frame, frame, self.warp_matrix)
+            # Show the frame
+            cv2.imshow("Screenspace", frame)
+            cv2.waitKey(1)
+            return
+        if not pygame_initialised:
+            pygame.init()
+            pygame_initialised = True
         cv2.imshow("Video Feed", self.camera_frame)
         if (self.mode == "normal") or True:
             output_frame = self.current_frame.copy()
